@@ -1,2 +1,1 @@
-# psfree
-psfree
+https://cmorenot.github.io/psfree/
