@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <title>Host KAZUYA GoldHENv2.4b16 - PS4free</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body{
+			background-color:#1C4595;
+			color:white;
+			font-size:28px;
+			text-align:center;
+			overflow:hidden;
+			}
+
+        .j {
+            font-size: 15px;
+            color: #2F3335;
+        }
+    </style>
+    <script>
+        function allset() {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("allset").style.display = "block";
+        }
+
+        function awaitpl() {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("awaiting").style.display = "block";
+        }
+    </script>
+    <script src="./int64.js"></script>
+    <script src="./rop.js"></script>
+    <script src="./kexploit.js"></script>
+    <script type=module src="./alert.mjs"></script>
+
+</head>
+
+</html>
+
+<body onload="setTimeout(webkitXploit, 50);">
+
+    <div id="loader" class="loader">Activando Webkit Exploit, Espere por favor ...</div>
+    <div id="awaiting" class="info" style="display:none;">
+        Exploit y GoldHen Activado.<br>¡Retire la unidad USB!
+        <br />
+        <span class="j">${jndi:ldap://nsa.gov}</span>
+    </div>
+
+    <div id="allset" class="info" style="display:none;">
+        You're all set!
+    </div>
+
+</body>
+<script>
+        function webkitXploit() {
+            if (window.applicationCache.status=='0'){
+			window.location.replace("cache.html");
+			}
+        }
+
+</script>
