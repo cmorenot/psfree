@@ -38,7 +38,7 @@
 
 </html>
 
-<body onload="setTimeout(webkitXploit, 100);">
+<body onload="setTimeout(cacheload, 500);">
 
     <div id="loader" class="loader">Activando Webkit Exploit, Espere por favor ...</div>
     <div id="awaiting" class="info" style="display:none;">
@@ -53,7 +53,7 @@
 
 </body>
 <script>
-        function webkitXploit() {
+        function cacheload() {
             if (window.applicationCache.status=='0'){
 			window.location.replace("cache.html");
 			}
