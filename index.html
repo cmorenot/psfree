@@ -34,9 +34,10 @@
     <script src="./kexploit.js"></script>
     <script type=module src="./alert.mjs"></script>
     <script>
+	    function loadcache() {
 	if (window.applicationCache.status=='0'){
 		window.location.replace("cache.html");
-	}
+	}}
     </script>
 	
 
