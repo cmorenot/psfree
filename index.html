@@ -99,6 +99,7 @@ if ((window.applicationCache.status == '0') || (window.applicationCache.status =
         Autorun en <span id="countdown">5</span> segundos
     </div>
     <div id="estadoXploit">Esperando acción...</div>
+    <div id="fwInfo" style="font-size:18px; margin-top:10px;"></div>
 
 
     <input type="checkbox" id="autoRunCheck" checked hidden>
@@ -171,6 +172,10 @@ window.addEventListener('load', restartCountdown);
       document.getElementById("estadoXploit").innerHTML = msg;
   }
 
+  function setFW(msg){
+    document.getElementById("fwInfo").innerHTML = msg;
+}
+
 window.addEventListener('load', function(){
 
     window.log = function(msg){
@@ -182,11 +187,27 @@ window.addEventListener('load', function(){
             setEstado("Exploit activado ✔ Esperando payload...");
         }
 
+        if (msg.includes("BinLoader is ready. Send a payload to port 9020 now")) {
+            setEstado("Exploit activado ✔ Esperando payload, puerto 9020...");
+        }
+
+
+        if (msg.includes("Detected FW")) {
+
+            let limpio = msg
+                .replace("Detected FW:", "Firmware:")
+                .replace(", Exploit Version:", " | Exploit:");
+
+            setFW(limpio);
+        }
+
         // ❌ Ignora TODO lo demás (no hacer nada) //BinLoader is ready. Send a payload to port 9020 now
     };
 
     log = window.log;
 });
+
+
 
 </script>
 
