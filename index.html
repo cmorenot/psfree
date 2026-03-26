@@ -110,6 +110,22 @@ function setFW(msg){
     document.getElementById("fwInfo").innerHTML = msg;
 }
 
+// ================= DETECTAR FW DIRECTO =================
+function detectarFWdirecto() {
+
+    var ua = navigator.userAgent;
+    var match = ua.match(/PlayStation (\d)[ \/]([\d.]+)/);
+
+    if (match) {
+        var ps = match[1];
+        var fw = match[2];
+
+        setFW("PS" + ps + " Firmware " + fw);
+    } else {
+        setFW("Dispositivo no detectado");
+    }
+}
+
 // ================= BOTÓN =================
 jailbreakBtn.addEventListener("click", () => {
 
@@ -148,37 +164,22 @@ function restartCountdown() {
 // ================= LOAD PRINCIPAL =================
 window.addEventListener('load', function(){
 
-    // iniciar contador
+    // Mostrar firmware inmediatamente
+    detectarFWdirecto();
+
+    // Iniciar contador
     restartCountdown();
 
-    // detectar firmware manualmente
-    try {
-        if (typeof checkPlatformIsSupported === "function") {
-            checkPlatformIsSupported();
-        }
-    } catch(e){}
-
-    // interceptar logs del exploit
+    // Interceptar logs del exploit
     window.log = function(msg){
 
         if (!msg) return;
 
-        // Firmware
-        if (msg.includes("Detected FW")) {
-            let match = msg.match(/PS(\d) v([\d.]+)/);
-            if (match) {
-                setFW("PS" + match[1] + " Firmware " + match[2]);
-            }
-            return;
-        }
-
-        // Ya jailbroken
         if (msg.includes("Already jailbroken")) {
             setEstado("Exploit ya activo ✔");
             return;
         }
 
-        // BinLoader listo
         if (msg.includes("BinLoader")) {
             setEstado("Exploit activado ✔ Esperando payload (9020)...");
             return;
@@ -187,7 +188,6 @@ window.addEventListener('load', function(){
     };
 
     log = window.log;
-
 });
 </script>
 
