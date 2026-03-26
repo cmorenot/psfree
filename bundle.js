@@ -4418,9 +4418,21 @@ function runBinLoader() {
     payload_loader, // The START ROUTINE (entry point). This is the address of our shellcode.
     payload_buffer // The ARGUMENT to pass to the shellcode.
   );
-  document.getElementById("estadoXploit").innerText = "Exploit activado ✔";
-  log('BinLoader is ready. Send a payload to port 9020 now');
-  document.getElementById("estadoXploit").innerText = "Exploit activado ✔";
+  // log('BinLoader is ready. Send a payload to port 9020 now');
+  window.log = function(msg){
+
+    if (!msg) return;
+
+    if (msg.includes("BinLoader is ready")) {
+        setEstado("Sistema listo ✔ Esperando payload...");
+    } 
+    else {
+        setEstado(msg);
+    }
+  };
+
+    // MUY IMPORTANTE (para log() sin window)
+    var log = window.log;
   //OKOK
 }
 //================================================================================================
@@ -5294,3 +5306,7 @@ window.doJBwithPSFreeLapseExploit = doJBwithPSFreeLapseExploit;
 //================================================================================================
 // End of File ===================================================================================
 //================================================================================================
+
+function setEstado(msg){
+    document.getElementById("estadoXploit").innerHTML = msg;
+}
