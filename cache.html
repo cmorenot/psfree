@@ -7,60 +7,17 @@
 body {
     background: linear-gradient(to bottom right, #063FAB, #01258A);
     color: white;
-    font-size: 26px;
+    font-size: 28px;
     text-align: center;
     margin: 0;
     overflow: hidden;
-    font-family: Arial, sans-serif;
 }
 
-/* Contenedor central */
-.container {
+.info {
     position: relative;
-    top: 20%;
-}
-
-/* Mensaje principal */
-#status {
-    margin-bottom: 20px;
-}
-
-/* Botón */
-#jailbreakBtn {
-    margin-top: 20px;
-    padding: 12px 24px;
-    font-size: 18px;
-    font-weight: bold;
-    border: none;
-    border-radius: 6px;
-    background: #ffffff22;
-    color: white;
-    opacity: 0.6;
-}
-
-/* Checkbox */
-#autoRunCheck {
-    margin-top: 15px;
-}
-
-/* Consola */
-#console {
-    font-family: monospace;
-    background-color: rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 10px;
-    border-radius: 6px;
-    margin: 20px auto;
-    width: 80%;
-    text-align: left;
-    font-size: 14px;
-}
-
-/* Footer */
-footer {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #ccc;
+    top: 39%;
+    -webkit-font-feature-settings:"tnum";
+    font-feature-settings:"tnum";
 }
 </style>
 
@@ -70,28 +27,17 @@ history.replaceState(null,null,'index.html');
 var histlength = history.length;
 history.go(-histlength);
 
-// Referencias DOM
-var status = document.getElementById("status");
-var outputConsole;
-
-// Logger
-function log(msg){
-    outputConsole.textContent += msg + "\n";
-}
-
-// Progreso descarga
+// Progreso de descarga
 function DLProgress(e){
     var percent = Math.round((e.loaded / e.total) * 100);
-    status.innerHTML = "Instalando Cache... " + percent + "%";
-    log("[CACHE] Descargando... " + percent + "%");
+    msgs.innerHTML = "Instalando Cache ... " + percent + "%";
 }
 
-// Cache completa
+// Cache completada
 function DisplayCacheProgress(){
-    status.innerHTML = "Cache instalado con éxito";
-    log("");
-    log("[SUCCESS] Cache instalado correctamente");
-    log("Recargando en 3 segundos...");
+    setTimeout(function(){
+        msgs.innerHTML = "Cache instalado con éxito";
+    },2000);
 
     setTimeout(function(){
         location.reload();
@@ -105,53 +51,23 @@ window.applicationCache.oncached = DisplayCacheProgress;
 window.applicationCache.onupdateready = DisplayCacheProgress;
 
 window.applicationCache.ondownloading = function(){
-    status.innerHTML = "Descargando Cache...";
-    log("[INFO] Iniciando descarga de cache...");
-};
-
-window.applicationCache.onerror = function(){
-    status.innerHTML = "Error en cache, recargando...";
-    setTimeout(function(){
-        location.reload();
-    },2000);
+    msgs.innerHTML = "Descargando Cache ...";
 };
 
 window.applicationCache.onnoupdate = function(){
-    location.replace("index.html");
+    window.location.replace("index.html");
 };
 
-// Inicialización
-document.addEventListener("DOMContentLoaded", function(){
-    outputConsole = document.getElementById("console");
-    outputConsole.textContent = "";
-
-    log("Iniciando AppCache...");
-    log("Espere por favor...");
-});
+window.applicationCache.onerror = function(){
+    window.location.replace("index.html");
+};
 </script>
 
 </head>
 
 <body>
-
-<div class="container">
-    <div id="status">Cargando... Espere por favor!</div>
-
-    <button id="jailbreakBtn" disabled>Start Jailbreak</button>
-
-    <div>
-        <label>
-            <input type="checkbox" id="autoRunCheck" disabled>
-            Autorun desactivado
-        </label>
-    </div>
-
-    <pre id="console"></pre>
-
-    <footer>
-        UI adaptada estilo CEMT
-    </footer>
+<div id="msgs" class="info">
+    Cargando... Espere por favor!
 </div>
-
 </body>
 </html>
