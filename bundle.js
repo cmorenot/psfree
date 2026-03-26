@@ -4419,22 +4419,6 @@ function runBinLoader() {
     payload_buffer // The ARGUMENT to pass to the shellcode.
   );
   log('BinLoader is ready. Send a payload to port 9020 now');
-  
-  window.log = function(msg){
-
-    if (!msg) return;
-
-    if (msg.includes("BinLoader is ready")) {
-        setEstado("Sistema listo ✔ Esperando payload...");
-    } 
-    else {
-        setEstado(msg);
-    }
-};
-
-// MUY IMPORTANTE (para log() sin window)
-var log = window.log;
-  //OKOK
 }
 //================================================================================================
 // Malloc ========================================================================================
@@ -5307,7 +5291,3 @@ window.doJBwithPSFreeLapseExploit = doJBwithPSFreeLapseExploit;
 //================================================================================================
 // End of File ===================================================================================
 //================================================================================================
-
-function setEstado(msg){
-    document.getElementById("estadoXploit").innerHTML = msg;
-}

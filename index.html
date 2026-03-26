@@ -171,19 +171,23 @@ window.addEventListener('load', restartCountdown);
       document.getElementById("estadoXploit").innerHTML = msg;
   }
 
-  window.addEventListener('load', function(){
-      window.log = function(msg){
-          if (!msg) return;
+window.addEventListener('load', function(){
 
-          if (msg.includes("BinLoader")) {
-              setEstado("Sistema listo ✔ Esperando payload...");
-          } else {
-              setEstado(msg);
-          }
-      };
-      // Para cubrir llamadas log() sin window
-      log = window.log;
-  });
+    window.log = function(msg){
+
+        if (!msg) return;
+
+        // 🔥 SOLO este mensaje importa
+        if (msg.includes("Already jailbroken, no need to re-jailbrake")) {
+            setEstado("Exploit activado ✔ Esperando payload...");
+        }
+
+        // ❌ Ignora TODO lo demás (no hacer nada) //BinLoader is ready. Send a payload to port 9020 now
+    };
+
+    log = window.log;
+});
+
 </script>
 
 </html>
