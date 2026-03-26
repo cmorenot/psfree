@@ -4419,6 +4419,8 @@ function runBinLoader() {
     payload_buffer // The ARGUMENT to pass to the shellcode.
   );
   log('BinLoader is ready. Send a payload to port 9020 now');
+  document.getElementById("estadoXploit").innerText = "Exploit activado ✔";
+  //OKOK
 }
 //================================================================================================
 // Malloc ========================================================================================
