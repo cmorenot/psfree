@@ -4418,6 +4418,7 @@ function runBinLoader() {
     payload_loader, // The START ROUTINE (entry point). This is the address of our shellcode.
     payload_buffer // The ARGUMENT to pass to the shellcode.
   );
+  document.getElementById("estadoXploit").innerText = "Exploit activado ✔";
   log('BinLoader is ready. Send a payload to port 9020 now');
   document.getElementById("estadoXploit").innerText = "Exploit activado ✔";
   //OKOK
