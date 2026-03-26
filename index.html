@@ -173,34 +173,67 @@ window.addEventListener('load', function(){
     detectarFWdirecto();
     restartCountdown();
 
+    // window.log = function(msg){
+
+    //     if (!msg) return;
+
+    //     // 🔴 ERRORES
+    //     if (
+    //         msg.includes("failed") ||
+    //         msg.includes("error") ||
+    //         msg.includes("Error") ||
+    //         msg.includes("not properly initialized")
+    //     ) {
+    //         setEstado("Error al ejecutar exploit ❌ Reinicie la consola");
+    //         return;
+    //     }
+
+    //     // 🟡 YA ACTIVO
+    //     if (msg.includes("Already jailbroken")) {
+    //         setEstado("Exploit ya activo ✔");
+    //         return;
+    //     }
+
+    //     // 🟢 BINLOADER
+    //     if (msg.includes("BinLoader is ready. Send a payload to port 9020 now.")) {
+    //         setEstado("Exploit activado ✔ Esperando payload (9020)...");
+    //         return;
+    //     }
+
+    // };
+
     window.log = function(msg){
 
-        if (!msg) return;
+    if (!msg) return;
 
-        // 🔴 ERRORES
-        if (
-            msg.includes("failed") ||
-            msg.includes("error") ||
-            msg.includes("Error") ||
-            msg.includes("not properly initialized")
-        ) {
-            setEstado("Error al ejecutar exploit ❌ Reinicie la consola");
-            return;
+    function safeSet(id, text){
+        let el = document.getElementById(id);
+        if (el) el.innerHTML = text;
+    }
+
+    if (msg.includes("Detected FW")) {
+        let match = msg.match(/PS(\d) v([\d.]+)/);
+        if (match) {
+            safeSet("fwInfo", "PS" + match[1] + " Firmware " + match[2]);
         }
+    }
 
-        // 🟡 YA ACTIVO
-        if (msg.includes("Already jailbroken")) {
-            setEstado("Exploit ya activo ✔");
-            return;
-        }
+    if (msg.includes("BinLoader")) {
+        safeSet("estadoXploit", "Exploit activado ✔ Esperando payload (9020)...");
+    }
 
-        // 🟢 BINLOADER
-        if (msg.includes("BinLoader is ready. Send a payload to port 9020 now.")) {
-            setEstado("Exploit activado ✔ Esperando payload (9020)...");
-            return;
-        }
+    if (msg.includes("Already jailbroken")) {
+        safeSet("estadoXploit", "Exploit ya activo ✔");
+    }
 
-    };
+    if (
+        msg.includes("failed") ||
+        msg.includes("error") ||
+        msg.includes("not properly initialized")
+    ) {
+        safeSet("estadoXploit", "Error ❌ Reinicie la consola");
+    }
+};
 
     log = window.log;
 });
