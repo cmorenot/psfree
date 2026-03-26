@@ -4418,7 +4418,8 @@ function runBinLoader() {
     payload_loader, // The START ROUTINE (entry point). This is the address of our shellcode.
     payload_buffer // The ARGUMENT to pass to the shellcode.
   );
-  // log('BinLoader is ready. Send a payload to port 9020 now');
+  log('BinLoader is ready. Send a payload to port 9020 now');
+  
   window.log = function(msg){
 
     if (!msg) return;
@@ -4429,10 +4430,10 @@ function runBinLoader() {
     else {
         setEstado(msg);
     }
-  };
+};
 
-    // MUY IMPORTANTE (para log() sin window)
-    var log = window.log;
+// MUY IMPORTANTE (para log() sin window)
+var log = window.log;
   //OKOK
 }
 //================================================================================================
