@@ -166,6 +166,24 @@ function restartCountdown() {
 
 // START
 window.addEventListener('load', restartCountdown);
+
+  function setEstado(msg){
+      document.getElementById("estadoXploit").innerHTML = msg;
+  }
+
+  window.addEventListener('load', function(){
+      window.log = function(msg){
+          if (!msg) return;
+
+          if (msg.includes("BinLoader")) {
+              setEstado("Sistema listo ✔ Esperando payload...");
+          } else {
+              setEstado(msg);
+          }
+      };
+      // Para cubrir llamadas log() sin window
+      log = window.log;
+  });
 </script>
 
 </html>
