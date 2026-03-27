@@ -1,18 +1,27 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>PSFree | 9.00</title>
+<title>PSFree | 7.00-9.60</title>
+
+<!-- 🔥 CAPTURA LOGS TEMPRANOS -->
+<script>
+window._earlyLogs = [];
+window.log = function(msg){
+    window._earlyLogs.push(msg);
+};
+</script>
 
 <script src="./bundle.js"></script>
 
 <style>
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
     background-color: #063FAB;
     color: white;
     font-size: 28px;
-    text-align: center;
-    margin: 0;
-    overflow: hidden;
     font-family: Arial, sans-serif;
 }
 
@@ -21,14 +30,18 @@ body {
 }
 
 .content {
-    position: relative;
-    top: 20%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* alinea desde arriba */
+    align-items: center;
+    margin-top: 50px; /* 🔹 aumenta o disminuye para bajar/subir el botón */
 }
 
 #jailbreakBtn {
     margin-top: 40px;
-    width: 140px;
-    height: 140px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     border: none;
     background: rgba(255,255,255,0.1);
@@ -46,18 +59,24 @@ body {
 }
 
 .ps-logo {
-    width: 70px;
+    width: 120px;
 }
 
-#autoRunText {
-    margin-top: 20px;
-    font-size: 18px;
+#estadoXploit {
+    margin-top: 30px;
+    font-size: 26px;
+    font-weight: bold;
+    text-shadow: 2px 2px #000;
 }
 
 footer {
-    margin-top: 30px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
     font-size: 14px;
     color: #ccc;
+    padding: 10px 0;
 }
 </style>
 
@@ -74,22 +93,20 @@ if ((window.applicationCache.status == '0') || (window.applicationCache.status =
 
 <div class="content">
 
+    <!-- BOTÓN -->
     <button id="jailbreakBtn">
         <svg class="ps-logo" xmlns="http://www.w3.org/2000/svg" viewBox="4.3 9.5 41.1 31">
             <path d="M5.8 32.1c-1.5 1-1 2.9 2.2 3.8 3.3 1.1 6.9 1.4 10.4.8.2 0 .4-.1.5-.1v-3.4l-3.4 1.1c-1.3.4-2.6.5-3.9.2-1-.3-.8-.9.4-1.4l6.9-2.4V27l-9.6 3.3c-1.2.4-2.4 1-3.5 1.8zm23.2-15v9.7c4.1 2 7.3 0 7.3-5.2 0-5.3-1.9-7.7-7.4-9.6C26 11 23 10.1 20 9.5v28.9l7 2.1V16.2c0-1.1 0-1.9.8-1.6 1.1.3 1.2 1.4 1.2 2.5zm13 12.7c-2.9-1-6-1.4-9-1.1-1.6.1-3.1.5-4.5 1l-.3.1v3.9l6.5-2.4c1.3-.4 2.6-.5 3.9-.2 1 .3.8.9-.4 1.4l-10 3.7V40L42 34.9c1-.4 1.9-.9 2.7-1.7.7-1 .4-2.4-2.7-3.4z" fill="white"/>
         </svg>
     </button>
 
-    <div id="autoRunText">
-        Autorun en <span id="countdown">5</span> segundos
-    </div>
+    <!-- 🔥 UN SOLO DIV DINÁMICO -->
 
-    <div id="estadoXploit">Esperando acción...</div>
     <div id="fwInfo" style="font-size:18px; margin-top:10px;"></div>
 
-    <input type="checkbox" id="autoRunCheck" checked hidden>
+    <div id="estadoXploit">Ejecución automática en 5 segundos</div>
 
-    <footer>PSFree Loader</footer>
+    <footer> UI by CEMT | Made with ❤️ | +53 54 11 21 54</footer>
 
 </div>
 
@@ -98,10 +115,9 @@ if ((window.applicationCache.status == '0') || (window.applicationCache.status =
 var countdownValue = 5;
 var countdownTimer = null;
 
-var countdownSpan = document.getElementById('countdown');
 var jailbreakBtn = document.getElementById('jailbreakBtn');
 
-// ================= FUNCIONES UI =================
+// ================= FUNCIONES =================
 function setEstado(msg){
     document.getElementById("estadoXploit").innerHTML = msg;
 }
@@ -128,7 +144,6 @@ jailbreakBtn.addEventListener("click", () => {
     setEstado("Ejecutando exploit...");
 
     jailbreakBtn.disabled = true;
-    countdownSpan.textContent = "-";
 
     if (countdownTimer) clearInterval(countdownTimer);
 
@@ -141,13 +156,15 @@ jailbreakBtn.addEventListener("click", () => {
 
 // ================= COUNTDOWN =================
 function restartCountdown() {
+
     countdownValue = 5;
-    countdownSpan.textContent = countdownValue;
+    setEstado("Ejecución automática en " + countdownValue + " segundos");
 
     countdownTimer = setInterval(() => {
 
         countdownValue--;
-        countdownSpan.textContent = countdownValue;
+
+        setEstado("Ejecución automática en " + countdownValue + " segundos");
 
         if (countdownValue <= 0) {
             clearInterval(countdownTimer);
@@ -157,7 +174,7 @@ function restartCountdown() {
     }, 1000);
 }
 
-// ================= ERRORES JS =================
+// ================= ERRORES =================
 window.onerror = function(){
     setEstado("Error crítico ❌ Reinicie la consola");
     return true;
@@ -188,22 +205,27 @@ window.addEventListener('load', function(){
             return;
         }
 
+        // 🟢 TU MENSAJE REAL
+        if (msg.includes("Kernel exploit succeeded")) {
+            setEstado("Kernel exploit activado ✔ Puede enviar payload (9020)");
+            jailbreakBtn.style.background = "rgba(0,255,0,0.2)";
+            return;
+        }
+
         // 🟡 YA ACTIVO
         if (msg.includes("Already jailbroken")) {
-            setEstado("Exploit ya activo ✔ puede enviar payload por el puerto 9020...");
+            setEstado("Exploit ya activo ✔ Puede enviar payload (9020)");
             return;
         }
-
-        // 🟢 BINLOADER
-        if (msg.includes("Kernel exploit succeeded and AIO fixes applied")) {
-            setEstado("Kernel exploit activado y parche AIO aplicado ✔...");
-            return;
-        }
-
     };
 
-
     log = window.log;
+
+    // 🔥 LOGS TEMPRANOS
+    if (window._earlyLogs) {
+        window._earlyLogs.forEach(msg => log(msg));
+        window._earlyLogs = [];
+    }
 });
 </script>
 
